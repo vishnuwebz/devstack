@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,68 +8,97 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 
+    <meta name="description" content="Discover whether you're more suited for MERN stack or Python full-stack development with this fun personality quiz!">
+    <meta name="keywords" content="developer quiz, MERN stack, Python, full-stack development, programming quiz, coding career">
+    <meta name="author" content="vishnu webz">
+
+    <!-- Open Graph tags for social media sharing -->
+    <meta property="og:title" content="DevStack Personality Quiz">
+    <meta property="og:description" content="Discover your ideal development stack with this fun quiz!">
+    <meta property="og:image" content="https://vishnuwebz.github.io/devstack/quiz-preview.png">
+    <meta property="og:url" content="https://vishnuwebz.github.io/devstack/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DevStack Personality Quiz">
+    <meta name="twitter:description" content="Discover your ideal development stack with this fun quiz!">
+    <meta name="twitter:image" content="https://vishnuwebz.github.io/devstack/quiz-preview.png">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID'); // Need to with my GA measurement ID
+    </script>
+
 </head>
+
 <body>
     <button id="theme-toggle" class="theme-toggle">
         <i class="fas fa-moon"></i>
     </button>
-    
+
     <div class="container">
         <h1>DevStack Personality Quiz</h1>
         <div class="credits">Designed and developed by vishnu webz</div>
-        
+
         <!-- Ad Container 1: Header Ad -->
         <div id="ad-container-1" class="ad-container">
             <div class="ad-label">Advertisement</div>
             <!-- AdSense Ad Code will be inserted here dynamically -->
         </div>
-        
+
         <p class="description">Discover whether you're more suited for the MERN stack or Python full-stack development with this fun quiz!</p>
-        
+
         <div class="user-name">
             <input type="text" id="name-input" class="name-input" placeholder="Enter your name to begin">
         </div>
-        
+
         <div id="intro-container">
             <p class="description">Answer 10 quick questions about your preferences and working style, and we'll determine which development stack matches your personality!</p>
-            
+
             <!-- Ad Container 2: Pre-Quiz Ad -->
             <div id="ad-container-2" class="ad-container">
                 <div class="ad-label">Advertisement</div>
                 <!-- AdSense Ad Code will be inserted here dynamically -->
             </div>
-            
+
             <button id="start-btn" class="start-btn" disabled>Start Quiz <i class="fas fa-play"></i></button>
         </div>
-        
+
         <div id="quiz-container" class="quiz-container">
             <div class="progress-container">
                 <div id="progress-bar" class="progress-bar"></div>
             </div>
-            
+
             <div id="question-container">
                 <!-- Questions will be inserted here -->
             </div>
-            
+
             <div class="navigation">
                 <button id="prev-btn" class="nav-btn" disabled><i class="fas fa-arrow-left"></i> Previous</button>
                 <button id="next-btn" class="nav-btn">Next <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
-        
+
         <div id="result-container" class="result-container">
             <div class="celebration">
                 <i class="fas fa-trophy"></i>
             </div>
             <h2 id="result-title" class="result-title"></h2>
             <div id="result-description" class="result-description"></div>
-            
+
             <!-- Ad Container 3: Results Ad -->
             <div id="ad-container-3" class="ad-container">
                 <div class="ad-label">Advertisement</div>
                 <!-- AdSense Ad Code will be inserted here dynamically -->
             </div>
-            
+
             <div class="result-graphic">
                 <div class="graphic-bar" id="mern-bar" style="height: 150px;">
                     <span class="graphic-label">MERN</span>
@@ -77,18 +107,19 @@
                     <span class="graphic-label">Python</span>
                 </div>
             </div>
-            
+
             <div class="roadmap">
                 <h3 class="roadmap-title">Your Learning Roadmap</h3>
                 <ul id="roadmap-steps" class="roadmap-steps">
                     <!-- Roadmap steps will be inserted here -->
                 </ul>
             </div>
-            
+
             <button id="restart-btn" class="restart-btn">Take Quiz Again <i class="fas fa-redo"></i></button>
         </div>
     </div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
