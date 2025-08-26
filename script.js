@@ -1,4 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // AdSense Configuration
+    // =============================================
+    // REPLACE THESE VALUES WITH YOUR ACTUAL ADSENSE IDs
+    // =============================================
+    const AD_CLIENT = 'ca-pub-YOUR_PUBLISHER_ID'; // Replace with your AdSense publisher ID
+    const AD_SLOTS = {
+        HEADER: 'YOUR_AD_SLOT_ID_1',
+        PRE_QUIZ: 'YOUR_AD_SLOT_ID_2',
+        RESULTS: 'YOUR_AD_SLOT_ID_3'
+    };
+    // =============================================
+
+    // Check if AdSense is properly configured
+    const isAdSenseConfigured = AD_CLIENT && AD_CLIENT !== 'ca-pub-YOUR_PUBLISHER_ID' &&
+        AD_SLOTS.HEADER && AD_SLOTS.HEADER !== 'YOUR_AD_SLOT_ID_1' &&
+        AD_SLOTS.PRE_QUIZ && AD_SLOTS.PRE_QUIZ !== 'YOUR_AD_SLOT_ID_2' &&
+        AD_SLOTS.RESULTS && AD_SLOTS.RESULTS !== 'YOUR_AD_SLOT_ID_3';
+
     // Theme toggle functionality
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = themeToggle.querySelector('i');
@@ -44,6 +62,56 @@ document.addEventListener('DOMContentLoaded', function() {
     const pythonBar = document.getElementById('python-bar');
     const roadmapSteps = document.getElementById('roadmap-steps');
     const restartBtn = document.getElementById('restart-btn');
+
+    // Ad Containers
+    const adContainer1 = document.getElementById('ad-container-1');
+    const adContainer2 = document.getElementById('ad-container-2');
+    const adContainer3 = document.getElementById('ad-container-3');
+
+    // Initialize AdSense if configured
+    if (isAdSenseConfigured) {
+        // Load AdSense script
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT}`;
+        script.crossOrigin = 'anonymous';
+        document.head.appendChild(script);
+
+        // Show ad containers
+        adContainer1.style.display = 'block';
+        adContainer2.style.display = 'block';
+        adContainer3.style.display = 'block';
+
+        // Create ads
+        createAd(adContainer1, AD_SLOTS.HEADER);
+        createAd(adContainer2, AD_SLOTS.PRE_QUIZ);
+        createAd(adContainer3, AD_SLOTS.RESULTS);
+    }
+
+    // Function to create an ad
+    function createAd(container, slotId) {
+        const ins = document.createElement('ins');
+        ins.className = 'adsbygoogle';
+        ins.style.display = 'block';
+        ins.dataset.adClient = AD_CLIENT;
+        ins.dataset.adSlot = slotId;
+        ins.dataset.adFormat = 'auto';
+        ins.dataset.fullWidthResponsive = 'true';
+
+        container.appendChild(ins);
+
+        // Push ad to AdSense
+        if (window.adsbygoogle) {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        } else {
+            // If AdSense script hasn't loaded yet, try again later
+            setTimeout(() => {
+                if (window.adsbygoogle) {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
+            }, 1000);
+        }
+    }
 
     // Quiz state
     let currentQuestion = 0;

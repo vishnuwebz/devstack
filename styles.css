@@ -82,29 +82,7 @@ h1 {
     font-size: 0.9rem;
     font-weight: 500;
     color: #888;
-    /* Professional grey color */
     opacity: 0.85;
-}
-
-.credits .brand {
-    background: linear-gradient(45deg, #888, #aaa, #666, #888);
-    background-size: 300% 300%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradientShift 3s ease-in-out infinite;
-    font-weight: 600;
-    position: relative;
-}
-
-/* Dark mode adjustments */
-.dark-mode .credits {
-    color: #aaa;
-    /* Lighter grey for dark mode */
-}
-
-.dark-mode .credits .brand {
-    background: linear-gradient(45deg, #ccc, #eee, #aaa, #ccc);
 }
 
 .description {
@@ -223,14 +201,6 @@ h1 {
 .result-container {
     display: none;
     text-align: center;
-}
-
-.result-card {
-    background: var(--card-bg);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px var(--shadow-color);
-    margin: 20px 0;
 }
 
 .result-title {
@@ -411,6 +381,26 @@ h1 {
     color: var(--text-secondary);
 }
 
+/* Ad Container Styles - Hidden by default */
+.ad-container {
+    margin: 25px 0;
+    padding: 15px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    display: none;
+    /* Hidden by default */
+}
+
+.ad-label {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 @media (max-width: 600px) {
     .options {
         flex-direction: column;
@@ -433,5 +423,10 @@ h1 {
         right: 10px;
         width: 40px;
         height: 40px;
+    }
+
+    .ad-container {
+        margin: 15px 0;
+        padding: 10px;
     }
 }
