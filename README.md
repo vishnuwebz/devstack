@@ -38,7 +38,7 @@ devstack/
 
 ## 🚀 How to Use
 
-1. Visit the website: [https://vishnuwebz.github.io/devstack/](https://vishnuwebz.github.io/devstack/)
+1. Visit the website: [https://devstack-quiz.netlify.app/](https://devstack-quiz.netlify.app/)
 2. Enter your name to personalize the experience
 3. Answer 10 questions about your development preferences
 4. View your results and personalized learning roadmap
@@ -77,4 +77,4 @@ Each result includes:
 
 GitHub: @vishnuwebz
 
-Website: https://vishnuwebz.github.io/devstack/
+Website: https://devstack-quiz.netlify.app/
