@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://vishnuwebz.github.io/devstack/sitemap.xml
+Sitemap: https://devstack-quiz.netlify.app/
