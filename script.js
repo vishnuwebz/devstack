@@ -3,19 +3,45 @@ document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     // REPLACE THESE VALUES WITH YOUR ACTUAL ADSENSE IDs
     // =============================================
-    const AD_CLIENT = 'ca-pub-3606732388400135'; // Replace with your AdSense publisher ID
+    const AD_CLIENT = 'ca-pub-3606732388400135';
     const AD_SLOTS = {
-        HEADER: '3819780687',
-        PRE_QUIZ: '6222582746',
-        RESULTS: '5558553558'
+        HEADER: '3819780687',   // DevStack_Header
+        PRE_QUIZ: '6222582746', // DevStack_PreQuiz
+        RESULTS: '5558553558'   // DevStack_Results
     };
     // =============================================
+// Always load ads if slots exist
+const isAdSenseConfigured = AD_CLIENT && AD_SLOTS.HEADER && AD_SLOTS.PRE_QUIZ && AD_SLOTS.RESULTS;
+
 
     // Check if AdSense is properly configured
     const isAdSenseConfigured = AD_CLIENT && AD_CLIENT !== 'ca-pub-3606732388400135' &&
         AD_SLOTS.HEADER && AD_SLOTS.HEADER !== '3819780687' &&
         AD_SLOTS.PRE_QUIZ && AD_SLOTS.PRE_QUIZ !== '6222582746' &&
         AD_SLOTS.RESULTS && AD_SLOTS.RESULTS !== '5558553558';
+
+function loadAd(containerId, slot) {
+    if (!isAdSenseConfigured) return;
+
+    const container = document.getElementById(containerId);
+    if (container) {
+        container.innerHTML = `
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="${AD_CLIENT}"
+                 data-ad-slot="${slot}"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        `;
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    loadAd("ad-container-1", AD_SLOTS.HEADER);
+    loadAd("ad-container-2", AD_SLOTS.PRE_QUIZ);
+    loadAd("ad-container-3", AD_SLOTS.RESULTS);
+});
 
     // Theme toggle functionality
     const themeToggle = document.getElementById('theme-toggle');
