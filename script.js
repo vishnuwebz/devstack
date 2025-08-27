@@ -1,47 +1,37 @@
 document.addEventListener('DOMContentLoaded', function() {
     // AdSense Configuration
-    // =============================================
-    // REPLACE THESE VALUES WITH YOUR ACTUAL ADSENSE IDs
-    // =============================================
     const AD_CLIENT = 'ca-pub-3606732388400135';
     const AD_SLOTS = {
-        HEADER: '3819780687',   // DevStack_Header
-        PRE_QUIZ: '6222582746', // DevStack_PreQuiz
-        RESULTS: '5558553558'   // DevStack_Results
+        HEADER: '3819780687',
+        PRE_QUIZ: '6222582746',
+        RESULTS: '5558553558'
     };
-    // =============================================
-// Always load ads if slots exist
-const isAdSenseConfigured = AD_CLIENT && AD_SLOTS.HEADER && AD_SLOTS.PRE_QUIZ && AD_SLOTS.RESULTS;
-
 
     // Check if AdSense is properly configured
-    const isAdSenseConfigured = AD_CLIENT && AD_CLIENT !== 'ca-pub-3606732388400135' &&
-        AD_SLOTS.HEADER && AD_SLOTS.HEADER !== '3819780687' &&
-        AD_SLOTS.PRE_QUIZ && AD_SLOTS.PRE_QUIZ !== '6222582746' &&
-        AD_SLOTS.RESULTS && AD_SLOTS.RESULTS !== '5558553558';
+    const isAdSenseConfigured = AD_CLIENT && AD_SLOTS.HEADER && AD_SLOTS.PRE_QUIZ && AD_SLOTS.RESULTS;
 
-function loadAd(containerId, slot) {
-    if (!isAdSenseConfigured) return;
+    // Function to load ads
+    function loadAd(containerId, slot) {
+        if (!isAdSenseConfigured) return;
 
-    const container = document.getElementById(containerId);
-    if (container) {
-        container.innerHTML = `
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="${AD_CLIENT}"
-                 data-ad-slot="${slot}"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-        `;
-        (adsbygoogle = window.adsbygoogle || []).push({});
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = `
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="${AD_CLIENT}"
+                     data-ad-slot="${slot}"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            `;
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        }
     }
-}
 
-document.addEventListener("DOMContentLoaded", function () {
+    // Load ads
     loadAd("ad-container-1", AD_SLOTS.HEADER);
     loadAd("ad-container-2", AD_SLOTS.PRE_QUIZ);
     loadAd("ad-container-3", AD_SLOTS.RESULTS);
-});
 
     // Theme toggle functionality
     const themeToggle = document.getElementById('theme-toggle');
@@ -88,56 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const pythonBar = document.getElementById('python-bar');
     const roadmapSteps = document.getElementById('roadmap-steps');
     const restartBtn = document.getElementById('restart-btn');
-
-    // Ad Containers
-    const adContainer1 = document.getElementById('ad-container-1');
-    const adContainer2 = document.getElementById('ad-container-2');
-    const adContainer3 = document.getElementById('ad-container-3');
-
-    // Initialize AdSense if configured
-    if (isAdSenseConfigured) {
-        // Load AdSense script
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT}`;
-        script.crossOrigin = 'anonymous';
-        document.head.appendChild(script);
-
-        // Show ad containers
-        adContainer1.style.display = 'block';
-        adContainer2.style.display = 'block';
-        adContainer3.style.display = 'block';
-
-        // Create ads
-        createAd(adContainer1, AD_SLOTS.HEADER);
-        createAd(adContainer2, AD_SLOTS.PRE_QUIZ);
-        createAd(adContainer3, AD_SLOTS.RESULTS);
-    }
-
-    // Function to create an ad
-    function createAd(container, slotId) {
-        const ins = document.createElement('ins');
-        ins.className = 'adsbygoogle';
-        ins.style.display = 'block';
-        ins.dataset.adClient = AD_CLIENT;
-        ins.dataset.adSlot = slotId;
-        ins.dataset.adFormat = 'auto';
-        ins.dataset.fullWidthResponsive = 'true';
-
-        container.appendChild(ins);
-
-        // Push ad to AdSense
-        if (window.adsbygoogle) {
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        } else {
-            // If AdSense script hasn't loaded yet, try again later
-            setTimeout(() => {
-                if (window.adsbygoogle) {
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                }
-            }, 1000);
-        }
-    }
 
     // Quiz state
     let currentQuestion = 0;
@@ -251,15 +191,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const question = questions[currentQuestion];
         questionContainer.innerHTML = `
-                    <div class="question">
-                        <div class="question-text">${currentQuestion + 1}. ${question.question}</div>
-                        <div class="example">${question.example}</div>
-                        <div class="options">
-                            <button class="option" data-value="0">${question.options[0]}</button>
-                            <button class="option" data-value="1">${question.options[1]}</button>
-                        </div>
-                    </div>
-                `;
+            <div class="question">
+                <div class="question-text">${currentQuestion + 1}. ${question.question}</div>
+                <div class="example">${question.example}</div>
+                <div class="options">
+                    <button class="option" data-value="0">${question.options[0]}</button>
+                    <button class="option" data-value="1">${question.options[1]}</button>
+                </div>
+            </div>
+        `;
 
         // Mark selected option if already answered
         if (answers[currentQuestion] !== undefined) {
@@ -280,17 +220,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Store answer
                 answers[currentQuestion] = parseInt(this.dataset.value);
+
+                // Enable next button
+                nextBtn.disabled = false;
             });
         });
 
         // Update navigation buttons
         prevBtn.disabled = currentQuestion === 0;
+        nextBtn.disabled = answers[currentQuestion] === undefined;
 
         if (currentQuestion === questions.length - 1) {
-            nextBtn.textContent = 'See Results ';
             nextBtn.innerHTML = 'See Results <i class="fas fa-chart-bar"></i>';
         } else {
-            nextBtn.textContent = 'Next ';
             nextBtn.innerHTML = 'Next <i class="fas fa-arrow-right"></i>';
         }
     }
