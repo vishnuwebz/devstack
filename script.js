@@ -3,19 +3,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     // REPLACE THESE VALUES WITH YOUR ACTUAL ADSENSE IDs
     // =============================================
-    const AD_CLIENT = 'ca-pub-YOUR_PUBLISHER_ID'; // Replace with your AdSense publisher ID
+    const AD_CLIENT = 'ca-pub-3606732388400135'; // Replace with your AdSense publisher ID
     const AD_SLOTS = {
-        HEADER: 'YOUR_AD_SLOT_ID_1',
-        PRE_QUIZ: 'YOUR_AD_SLOT_ID_2',
-        RESULTS: 'YOUR_AD_SLOT_ID_3'
+        HEADER: '3819780687',
+        PRE_QUIZ: '6222582746',
+        RESULTS: '5558553558'
     };
     // =============================================
 
     // Check if AdSense is properly configured
-    const isAdSenseConfigured = AD_CLIENT && AD_CLIENT !== 'ca-pub-YOUR_PUBLISHER_ID' &&
-        AD_SLOTS.HEADER && AD_SLOTS.HEADER !== 'YOUR_AD_SLOT_ID_1' &&
-        AD_SLOTS.PRE_QUIZ && AD_SLOTS.PRE_QUIZ !== 'YOUR_AD_SLOT_ID_2' &&
-        AD_SLOTS.RESULTS && AD_SLOTS.RESULTS !== 'YOUR_AD_SLOT_ID_3';
+    const isAdSenseConfigured = AD_CLIENT && AD_CLIENT !== 'ca-pub-3606732388400135' &&
+        AD_SLOTS.HEADER && AD_SLOTS.HEADER !== '3819780687' &&
+        AD_SLOTS.PRE_QUIZ && AD_SLOTS.PRE_QUIZ !== '6222582746' &&
+        AD_SLOTS.RESULTS && AD_SLOTS.RESULTS !== '5558553558';
 
     // Theme toggle functionality
     const themeToggle = document.getElementById('theme-toggle');
