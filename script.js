@@ -79,6 +79,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const roadmapSteps = document.getElementById('roadmap-steps');
     const restartBtn = document.getElementById('restart-btn');
 
+    // NEW: Review section elements
+    const reviewToggle = document.getElementById('review-toggle');
+    const reviewContainer = document.getElementById('review-container');
+    const reviewAnswers = document.getElementById('review-answers');
+    const downloadBtn = document.getElementById('download-btn');
+
     // Quiz state
     let currentQuestion = 0;
     let answers = [];
@@ -344,6 +350,170 @@ document.addEventListener('DOMContentLoaded', function() {
 
         resultTitle.textContent = result;
         resultDescription.textContent = description;
+
+        // Show review answers
+        showReviewAnswers();
+    }
+
+    // Show review answers
+    function showReviewAnswers() {
+        reviewAnswers.innerHTML = '';
+
+        questions.forEach((question, index) => {
+            const answerDiv = document.createElement('div');
+            answerDiv.className = 'review-question';
+
+            const questionText = document.createElement('div');
+            questionText.className = 'review-question-text';
+            questionText.textContent = `${index + 1}. ${question.question}`;
+
+            const answerText = document.createElement('div');
+            answerText.className = 'review-answer';
+
+            if (answers[index] !== undefined) {
+                answerText.textContent = question.options[answers[index]];
+            } else {
+                answerText.textContent = 'Not answered';
+            }
+
+            answerDiv.appendChild(questionText);
+            answerDiv.appendChild(answerText);
+            reviewAnswers.appendChild(answerDiv);
+        });
+    }
+
+    // Toggle review container
+    reviewToggle.addEventListener('click', function() {
+        reviewContainer.style.display = reviewContainer.style.display === 'none' ||
+            reviewContainer.style.display === '' ? 'block' : 'none';
+
+        reviewToggle.classList.toggle('expanded');
+    });
+
+    // Download PDF report
+    downloadBtn.addEventListener('click', function() {
+        generatePDF();
+    });
+
+    // Generate PDF report
+    function generatePDF() {
+        // Use html2canvas and jsPDF
+        const {
+            jsPDF
+        } = window.jspdf;
+
+        // Create a temporary container for PDF content
+        const pdfContainer = document.createElement('div');
+        pdfContainer.style.width = '800px';
+        pdfContainer.style.padding = '20px';
+        pdfContainer.style.backgroundColor = 'white';
+        pdfContainer.style.color = 'black';
+        pdfContainer.style.position = 'absolute';
+        pdfContainer.style.left = '-9999px';
+
+        // Add content to PDF container
+        pdfContainer.innerHTML = `
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h1 style="color: #667eea; margin-bottom: 10px;">DevStack Personality Quiz</h1>
+                <h2 style="color: #764ba2;">Result Report for ${userName}</h2>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #667eea;">${resultTitle.textContent}</h3>
+                <p>${resultDescription.textContent}</p>
+            </div>
+            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                <div style="width: 40px; margin: 0 20px;">
+                    <div style="height: ${mernBar.style.height}; background: linear-gradient(to top, #667eea, #764ba2); border-radius: 10px 10px 0 0;"></div>
+                    <div style="text-align: center; margin-top: 10px; font-weight: bold;">MERN</div>
+                </div>
+                <div style="width: 40px; margin: 0 20px;">
+                    <div style="height: ${pythonBar.style.height}; background: linear-gradient(to top, #667eea, #764ba2); border-radius: 10px 10px 0 0;"></div>
+                    <div style="text-align: center; margin-top: 10px; font-weight: bold;">Python</div>
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #667eea;">Your Learning Roadmap</h3>
+                <ul>
+                    ${Array.from(roadmapSteps.children).map(li => `<li>${li.textContent}</li>`).join('')}
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: #667eea;">Your Answers</h3>
+                ${Array.from(reviewAnswers.children).map((div, i) => `
+                    <div style="margin-bottom: 15px;">
+                        <div style="font-weight: bold;">${i+1}. ${div.querySelector('.review-question-text').textContent.replace(/^\d+\.\s/, '')}</div>
+                        <div style="background: #f0f4ff; padding: 10px; border-radius: 8px; border-left: 3px solid #5a67d8;">
+                            ${div.querySelector('.review-answer').textContent}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        document.body.appendChild(pdfContainer);
+
+        // Create watermark element
+        const watermark = document.createElement('div');
+        watermark.style.position = 'absolute';
+        watermark.style.top = '0';
+        watermark.style.left = '0';
+        watermark.style.width = '100%';
+        watermark.style.height = '100%';
+        watermark.style.pointerEvents = 'none';
+        watermark.style.opacity = '0.1';
+        watermark.style.background = 'repeating-linear-gradient(45deg, transparent, transparent 10px, #667eea 10px, #667eea 20px)';
+
+        pdfContainer.appendChild(watermark);
+
+        // Add text watermark
+        const textWatermark = document.createElement('div');
+        textWatermark.style.position = 'absolute';
+        textWatermark.style.top = '0';
+        textWatermark.style.left = '0';
+        textWatermark.style.width = '100%';
+        textWatermark.style.height = '100%';
+        textWatermark.style.pointerEvents = 'none';
+        textWatermark.style.opacity = '0.05';
+        textWatermark.style.backgroundImage = 'repeating-linear-gradient(45deg, transparent, transparent 50px, #000 50px, #000 100px)';
+        textWatermark.innerHTML = `
+            <div style="position: absolute; top: 30%; left: 0; width: 100%; transform: rotate(-45deg); font-size: 40px; text-align: center; color: #667eea;">
+                DevStack Quiz by vishnu webz · ${userName}
+            </div>
+        `;
+
+        pdfContainer.appendChild(textWatermark);
+
+        // Generate PDF
+        html2canvas(pdfContainer, {
+            scale: 2,
+            useCORS: true,
+            logging: false
+        }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgWidth = 210; // A4 width in mm
+            const pageHeight = 297; // A4 height in mm
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            // Add more pages if needed
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            // Save the PDF
+            pdf.save(`DevStack_Quiz_Result_${userName.replace(/\s+/g, '_')}.pdf`);
+
+            // Clean up
+            document.body.removeChild(pdfContainer);
+        });
     }
 
     // Restart quiz
@@ -353,6 +523,8 @@ document.addEventListener('DOMContentLoaded', function() {
         resultContainer.style.display = 'none';
         introContainer.style.display = 'block';
         roadmapSteps.innerHTML = '';
+        reviewContainer.style.display = 'none';
+        reviewToggle.classList.remove('expanded');
         nameInput.value = '';
         userName = '';
         startBtn.disabled = true;
