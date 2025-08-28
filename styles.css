@@ -521,3 +521,28 @@ h1 {
 .download-btn i {
     margin-right: 10px;
 }
+
+@media (max-width: 600px) {
+    .options {
+        flex-direction: column;
+    }
+
+    .question-text {
+        font-size: 1.1rem;
+    }
+
+    .example {
+        font-size: 0.9rem;
+    }
+
+    .credits {
+        font-size: 0.8rem;
+    }
+
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+}

@@ -78,8 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const pythonBar = document.getElementById('python-bar');
     const roadmapSteps = document.getElementById('roadmap-steps');
     const restartBtn = document.getElementById('restart-btn');
-
-    // NEW: Review section elements
     const reviewToggle = document.getElementById('review-toggle');
     const reviewContainer = document.getElementById('review-container');
     const reviewAnswers = document.getElementById('review-answers');
@@ -197,15 +195,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const question = questions[currentQuestion];
         questionContainer.innerHTML = `
-            <div class="question">
-                <div class="question-text">${currentQuestion + 1}. ${question.question}</div>
-                <div class="example">${question.example}</div>
-                <div class="options">
-                    <button class="option" data-value="0">${question.options[0]}</button>
-                    <button class="option" data-value="1">${question.options[1]}</button>
-                </div>
-            </div>
-        `;
+                    <div class="question">
+                        <div class="question-text">${currentQuestion + 1}. ${question.question}</div>
+                        <div class="example">${question.example}</div>
+                        <div class="options">
+                            <button class="option" data-value="0">${question.options[0]}</button>
+                            <button class="option" data-value="1">${question.options[1]}</button>
+                        </div>
+                    </div>
+                `;
 
         // Mark selected option if already answered
         if (answers[currentQuestion] !== undefined) {
@@ -226,19 +224,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Store answer
                 answers[currentQuestion] = parseInt(this.dataset.value);
-
-                // Enable next button
-                nextBtn.disabled = false;
             });
         });
 
         // Update navigation buttons
         prevBtn.disabled = currentQuestion === 0;
-        nextBtn.disabled = answers[currentQuestion] === undefined;
 
         if (currentQuestion === questions.length - 1) {
+            nextBtn.textContent = 'See Results ';
             nextBtn.innerHTML = 'See Results <i class="fas fa-chart-bar"></i>';
         } else {
+            nextBtn.textContent = 'Next ';
             nextBtn.innerHTML = 'Next <i class="fas fa-arrow-right"></i>';
         }
     }
@@ -413,42 +409,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Add content to PDF container
         pdfContainer.innerHTML = `
-            <div style="text-align: center; margin-bottom: 20px;">
-                <h1 style="color: #667eea; margin-bottom: 10px;">DevStack Personality Quiz</h1>
-                <h2 style="color: #764ba2;">Result Report for ${userName}</h2>
-            </div>
-            <div style="margin-bottom: 20px;">
-                <h3 style="color: #667eea;">${resultTitle.textContent}</h3>
-                <p>${resultDescription.textContent}</p>
-            </div>
-            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
-                <div style="width: 40px; margin: 0 20px;">
-                    <div style="height: ${mernBar.style.height}; background: linear-gradient(to top, #667eea, #764ba2); border-radius: 10px 10px 0 0;"></div>
-                    <div style="text-align: center; margin-top: 10px; font-weight: bold;">MERN</div>
-                </div>
-                <div style="width: 40px; margin: 0 20px;">
-                    <div style="height: ${pythonBar.style.height}; background: linear-gradient(to top, #667eea, #764ba2); border-radius: 10px 10px 0 0;"></div>
-                    <div style="text-align: center; margin-top: 10px; font-weight: bold;">Python</div>
-                </div>
-            </div>
-            <div style="margin-bottom: 20px;">
-                <h3 style="color: #667eea;">Your Learning Roadmap</h3>
-                <ul>
-                    ${Array.from(roadmapSteps.children).map(li => `<li>${li.textContent}</li>`).join('')}
-                </ul>
-            </div>
-            <div>
-                <h3 style="color: #667eea;">Your Answers</h3>
-                ${Array.from(reviewAnswers.children).map((div, i) => `
-                    <div style="margin-bottom: 15px;">
-                        <div style="font-weight: bold;">${i+1}. ${div.querySelector('.review-question-text').textContent.replace(/^\d+\.\s/, '')}</div>
-                        <div style="background: #f0f4ff; padding: 10px; border-radius: 8px; border-left: 3px solid #5a67d8;">
-                            ${div.querySelector('.review-answer').textContent}
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h1 style="color: #667eea; margin-bottom: 10px;">DevStack Personality Quiz</h1>
+                        <h2 style="color: #764ba2;">Result Report for ${userName}</h2>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="color: #667eea;">${resultTitle.textContent}</h3>
+                        <p>${resultDescription.textContent}</p>
+                    </div>
+                    <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                        <div style="width: 40px; margin: 0 20px;">
+                            <div style="height: ${mernBar.style.height}; background: linear-gradient(to top, #667eea, #764ba2); border-radius: 10px 10px 0 0;"></div>
+                            <div style="text-align: center; margin-top: 10px; font-weight: bold;">MERN</div>
+                        </div>
+                        <div style="width: 40px; margin: 0 20px;">
+                            <div style="height: ${pythonBar.style.height}; background: linear-gradient(to top, #667eea, #764ba2); border-radius: 10px 10px 0 0;"></div>
+                            <div style="text-align: center; margin-top: 10px; font-weight: bold;">Python</div>
                         </div>
                     </div>
-                `).join('')}
-            </div>
-        `;
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="color: #667eea;">Your Learning Roadmap</h3>
+                        <ul>
+                            ${Array.from(roadmapSteps.children).map(li => `<li>${li.textContent}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #667eea;">Your Answers</h3>
+                        ${Array.from(reviewAnswers.children).map((div, i) => `
+                            <div style="margin-bottom: 15px;">
+                                <div style="font-weight: bold;">${i+1}. ${div.querySelector('.review-question-text').textContent.replace(/^\d+\.\s/, '')}</div>
+                                <div style="background: #f0f4ff; padding: 10px; border-radius: 8px; border-left: 3px solid #5a67d8;">
+                                    ${div.querySelector('.review-answer').textContent}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
 
         document.body.appendChild(pdfContainer);
 
@@ -476,10 +472,10 @@ document.addEventListener('DOMContentLoaded', function() {
         textWatermark.style.opacity = '0.05';
         textWatermark.style.backgroundImage = 'repeating-linear-gradient(45deg, transparent, transparent 50px, #000 50px, #000 100px)';
         textWatermark.innerHTML = `
-            <div style="position: absolute; top: 30%; left: 0; width: 100%; transform: rotate(-45deg); font-size: 40px; text-align: center; color: #667eea;">
-                DevStack Quiz by vishnu webz · ${userName}
-            </div>
-        `;
+                    <div style="position: absolute; top: 30%; left: 0; width: 100%; transform: rotate(-45deg); font-size: 40px; text-align: center; color: #667eea;">
+                        DevStack Quiz by vishnu webz · ${userName}
+                    </div>
+                `;
 
         pdfContainer.appendChild(textWatermark);
 
